@@ -33,7 +33,7 @@
   .nav-cta::after{display:none}
 
   /* scroll-video hero */
-  .scrolly{height:380vh;position:relative}
+  .scrolly{height:300vh;position:relative}
   .scrolly-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:#0d0a08}
   .scrolly-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .scrolly-sticky::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.05) 30%,rgba(0,0,0,.05) 60%,rgba(0,0,0,.45) 100%)}

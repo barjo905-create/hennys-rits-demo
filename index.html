@@ -26,7 +26,7 @@
 
 <div class="scrolly" id="top">
   <div class="scrolly-sticky">
-    <video class="scrolly-media" id="scrollyVideo" src="assets/winkel-video-scrub-2k.mp4" poster="assets/winkel-hero.png" muted playsinline preload="auto"></video>
+    <video class="scrolly-media" id="scrollyVideo" src="assets/winkel-video-scrub-2k60.mp4" poster="assets/winkel-hero.png" muted playsinline preload="auto"></video>
 
     <div class="stage on" id="stage1">
       <div class="hero-kicker"><b>Sinds 1977</b> Men · Women · Kids · Fashion</div>
@@ -297,8 +297,8 @@
   (function raf(t) {
     lastRaf = t || performance.now();
     update();
-    if (videoReady && video.duration && Math.abs(video.currentTime - targetTime) > .02) {
-      video.currentTime += (targetTime - video.currentTime) * .18;
+    if (videoReady && video.duration && Math.abs(video.currentTime - targetTime) > .012) {
+      video.currentTime += (targetTime - video.currentTime) * .28;
     }
     requestAnimationFrame(raf);
   })();
