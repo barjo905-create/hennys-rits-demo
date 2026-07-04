@@ -31,6 +31,10 @@
   .nav-cta{background:var(--rood);color:#fff !important;padding:11px 24px;font-weight:700;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;text-shadow:none !important;transition:background .25s}
   .nav-cta:hover{background:var(--rood-donker)}
   .nav-cta::after{display:none}
+  .hamburger{display:none;background:none;border:0;cursor:pointer;padding:8px}
+  .hamburger span{display:block;width:24px;height:2px;background:#fff;margin:5px 0;transition:.3s}
+  header.solid .hamburger span{background:var(--zwart)}
+  .mobiele-knoppen{display:none}
 
   /* scroll-video hero */
   .scrolly{height:300vh;position:relative}
@@ -149,7 +153,12 @@
   .demo-note{position:fixed;bottom:16px;right:16px;z-index:200;background:var(--zwart);color:#fff;font-size:11px;padding:8px 14px;opacity:.85;letter-spacing:.5px}
 
   @media(max-width:940px){
-    .menu{display:none}
+    .hamburger{display:block}
+    .nav .nav-cta{display:none}
+    .menu{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;gap:0;padding:10px 28px 16px;border-bottom:1px solid var(--lijn);box-shadow:0 14px 30px rgba(0,0,0,.10)}
+    .menu.open{display:flex}
+    .menu a{display:block;padding:13px 0;color:var(--zwart) !important;text-shadow:none !important;border-bottom:1px solid var(--lichtgrijs)}
+    .menu li:last-child a{border-bottom:none}
     .usp .wrap,.grid-4{grid-template-columns:repeat(2,1fr)}
     .cats{grid-template-columns:1fr}
     .cat{height:420px}
@@ -158,6 +167,13 @@
     .stores-grid{grid-template-columns:1fr}
     .fit-cta{flex-direction:column;text-align:center}
     .btn-wit{margin-left:0;margin-top:12px}
+    .stage h1{font-size:clamp(32px,9vw,48px)}
+    .scrolly.mobiel{height:100vh;height:100svh}
+    .scrolly.mobiel .scrolly-sticky{position:relative;height:100vh;height:100svh}
+    .scrolly.mobiel .scrolly-media{object-position:center 30%}
+    .scrolly.mobiel #stage2,.scrolly.mobiel #stage3,.scrolly.mobiel .scroll-progress,.scrolly.mobiel .scroll-hint{display:none}
+    .scrolly.mobiel #stage1{opacity:1;transform:none;pointer-events:auto}
+    .scrolly.mobiel .mobiele-knoppen{display:flex;flex-direction:column;gap:12px;margin-top:30px;width:100%;max-width:300px}
   }
 
 /* ===== subpagina's ===== */

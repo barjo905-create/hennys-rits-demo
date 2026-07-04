@@ -20,6 +20,7 @@
       <li><a href="vestigingen.html">Vestigingen</a></li>
     </ul>
     <a href="pasvormadvies.html" class="nav-cta">Vind jouw fit</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
 </header>
 
@@ -126,6 +127,11 @@
     if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
   }), {threshold:.15});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // hamburgermenu (mobiel)
+  const menuEl = document.querySelector('.menu');
+  const burgerEl = document.getElementById('hamburger');
+  if (burgerEl && menuEl) burgerEl.addEventListener('click', () => menuEl.classList.toggle('open'));
 </script>
 
 </body>

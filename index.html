@@ -21,17 +21,19 @@
       <li><a href="vestigingen.html">Vestigingen</a></li>
     </ul>
     <a href="pasvormadvies.html" class="nav-cta">Vind jouw fit</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
 </header>
 
 <div class="scrolly" id="top">
   <div class="scrolly-sticky">
-    <video class="scrolly-media" id="scrollyVideo" src="assets/winkel-video-scrub-2k60.mp4" poster="assets/winkel-hero.png" muted playsinline preload="auto"></video>
+    <video class="scrolly-media" id="scrollyVideo" data-src="assets/winkel-video-scrub-2k60.mp4" poster="assets/winkel-hero.jpg" muted playsinline preload="auto"></video>
 
     <div class="stage on" id="stage1">
       <div class="hero-kicker"><b>Sinds 1977</b> Men · Women · Kids · Fashion</div>
       <h1>Stap binnen bij <span>dé jeansspecialist.</span></h1>
-      <p>Scroll en loop onze winkel in.</p>
+      <p>Shop de Nieuwste Mode bij Henny's Rits – Stijl voor Iedereen!</p>
+      <div class="mobiele-knoppen"><a href="#bestsellers" class="btn btn-rood">Shop bestsellers</a><a href="pasvormadvies.html" class="btn btn-wit" style="margin-left:0">Doe de pasvormcheck</a></div>
     </div>
 
     <div class="stage" id="stage2">
@@ -267,9 +269,13 @@
   const progressBar = document.getElementById('scrollProgress');
   let targetTime = 0, videoReady = false;
 
+  // Mobiel: geen zware video downloaden, statische foto-hero met knoppen
+  const isMobiel = matchMedia('(max-width:940px)').matches;
+  if (isMobiel) scrolly.classList.add('mobiel');
+
   // Laad de video als blob: dan is hij volledig seekbaar (nodig voor scrubben),
   // onafhankelijk van Range-support op de server. Bij mislukken blijft de poster-foto staan.
-  fetch(video.getAttribute('src'))
+  if (!isMobiel) fetch(video.getAttribute('data-src'))
     .then(r => { if (!r.ok) throw new Error(r.status); return r.blob(); })
     .then(b => { video.src = URL.createObjectURL(b); })
     .catch(() => { videoReady = false; });
@@ -292,28 +298,39 @@
     hdr.classList.toggle('solid', p >= 1 || scrollY > scrolly.offsetHeight - innerHeight + 60);
   }
 
-  // soepel scrubben met lerp in een rAF-loop
-  let lastRaf = 0;
-  (function raf(t) {
-    lastRaf = t || performance.now();
-    update();
-    if (videoReady && video.duration && Math.abs(video.currentTime - targetTime) > .012) {
-      video.currentTime += (targetTime - video.currentTime) * .28;
-    }
-    requestAnimationFrame(raf);
-  })();
+  if (!isMobiel) {
+    // soepel scrubben met lerp in een rAF-loop
+    let lastRaf = 0;
+    (function raf(t) {
+      lastRaf = t || performance.now();
+      update();
+      if (videoReady && video.duration && Math.abs(video.currentTime - targetTime) > .012) {
+        video.currentTime += (targetTime - video.currentTime) * .28;
+      }
+      requestAnimationFrame(raf);
+    })();
 
-  // fallback: als rAF stilstaat (verborgen/zuinige tab) scrubt de scroll-listener direct
-  addEventListener('scroll', () => {
-    update();
-    if (videoReady && video.duration && performance.now() - lastRaf > 200) video.currentTime = targetTime;
-  }, {passive:true});
+    // fallback: als rAF stilstaat (verborgen/zuinige tab) scrubt de scroll-listener direct
+    addEventListener('scroll', () => {
+      update();
+      if (videoReady && video.duration && performance.now() - lastRaf > 200) video.currentTime = targetTime;
+    }, {passive:true});
+  } else {
+    // mobiel: alleen de header laten omschakelen bij scrollen
+    hdr.classList.toggle('solid', scrollY > 60);
+    addEventListener('scroll', () => hdr.classList.toggle('solid', scrollY > 60), {passive:true});
+  }
 
   // reveal on scroll
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
   }), {threshold:.15});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // hamburgermenu (mobiel)
+  const menuEl = document.querySelector('.menu');
+  const burgerEl = document.getElementById('hamburger');
+  if (burgerEl && menuEl) burgerEl.addEventListener('click', () => menuEl.classList.toggle('open'));
 </script>
 
 </body>
